@@ -1,0 +1,29 @@
+{
+  "name": "Sam",
+  "version": "1.0.0",
+  "description": "Discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DistantDev",
+  "license": "ISC",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "discord.js": "^14.13.0",
+    "glob": "^8.0.3",
+    "mongoose": "^6.12.0",
+    "openai": "^3.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SyntaxErrorSolos/Sam.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SyntaxErrorSolos/Sam/issues"
+  },
+  "homepage": "https://github.com/SyntaxErrorSolos/Lexir#readme"
+}
