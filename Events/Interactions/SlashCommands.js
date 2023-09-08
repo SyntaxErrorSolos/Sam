@@ -16,11 +16,18 @@ module.exports = {
    * @param { ChatInputCommandInteraction } interaction
    */
   execute(interaction, client) {
-    if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild)
       return interaction.reply({
         content: "Commands can only be used in a server",
       });
+    if (interaction.isStringSelectMenu()) {
+      if (interaction.customId === "help") {
+        const value = interaction.values
+        let choice = `${value}`
+        if (choice === 'misc') return interaction.reply({ content: "**__Miscellaneous commands__**\n/growth - Check your server's member growth\n/reminder - Set a custom reminder", ephemeral: true })
+      }
+    }
+    if (!interaction.isChatInputCommand()) return;
     const command = client.commands.get(interaction.commandName);
     if (!command) {
       return interaction.reply({ content: "Unable to find given command!" });
