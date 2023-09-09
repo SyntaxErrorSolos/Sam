@@ -5,6 +5,7 @@ module.exports =
     model(
         "guildMessages",
         new Schema({
+            guildID: String,
             TotalMessages: Number,
             PreviousWeek: Number
         })

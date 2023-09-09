@@ -5,8 +5,10 @@ module.exports =
     model(
         "guildJoin",
         new Schema({
-            Joined: Number,
+            guildID: String,
             Left: Number,
+            JoinedWeekly: Number,
+            LeftWeekly: Number,
             PreviousWeek: Number
         })
     );
