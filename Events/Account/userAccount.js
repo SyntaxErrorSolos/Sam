@@ -5,7 +5,7 @@ module.exports =
     model(
         "userAccounts",
         new Schema({
-            userId: String,
+            userID: String,
             Tokens: Number
         })
     );

@@ -10,6 +10,7 @@ const {
     GuildMessages,
     GuildMessageReactions,
     MessageContent,
+    GuildMembers
 } = GatewayIntentBits;
 const { User, GuildMember, ThreadMember, Reaction, Message } = Partials;
 const client = new Client({
@@ -18,6 +19,7 @@ const client = new Client({
         GuildMessages,
         GuildMessageReactions,
         MessageContent,
+        GuildMembers
     ],
     partials: [User, GuildMember, ThreadMember, Reaction, Message],
     allowedMentions: { parse: ["users"] },
@@ -45,6 +47,41 @@ connect(client.config.DatabaseURL, {}).then(() =>
 //models
 const guildAccount = require("./Events/Account/guildAccount.js");
 const guildMemberJoinRate = require("./Events/GuildStats/guildJoinRate.js");
+
+
+//guild join event
+client.on("guildMemberAdd", async (member) => {
+    try {
+        if (member.user.bot) return;
+        const guildExists = await guildAccount.findOne({ guildID: member.guild.id })
+        if (!guildExists) return
+        await guildMemberJoinRate.findOneAndUpdate({
+            guildID: member.guild.id
+        }, {
+            $inc: { "JoinedWeekly": 1 },
+        })
+    } catch (err) {
+        return console.log(err)
+    }
+})
+
+//guild leave event
+client.on("guildMemberUpdate", async (member) => {
+    try {
+        if (member.user.bot) return;
+        const guildExists = await guildAccount.findOne({ guildID: member.guild.id })
+        if (!guildExists) return
+        await guildMemberJoinRate.findOneAndUpdate({
+            guildID: member.guild.id
+        }, {
+            $inc: { "Left": 1 },
+            $inc: { "LeftWeekly": 1 }
+        })
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 
 //message events
 client.on("messageCreate", async (message) => {

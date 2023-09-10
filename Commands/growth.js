@@ -18,14 +18,17 @@ module.exports = {
      * @param { } client
      */
     async execute(interaction, client) {
+        await interaction.deferReply({ ephemeral: true })
         try {
-            await interaction.deferReply({ ephemeral: true })
             const growthEnabled = await guildJoinRate.findOne({ guildID: interaction.guild.id })
             if (!growthEnabled) return interaction.editReply({ content: "Growth check is disabled." })
             else {
                 const memberLeaveAmount = growthEnabled.Left
                 const netGrowth = interaction.guild.memberCount - memberLeaveAmount;
                 const calculateRate = (netGrowth / interaction.guild.memberCount) * 100;
+
+                console.log(growthEnabled.Left)
+                console.log(memberLeaveAmount)
 
                 await guildAccount.findOneAndUpdate({
                     guildID: interaction.guild.id
@@ -44,7 +47,7 @@ module.exports = {
 
         } catch (err) {
             console.log(err)
-            return interaction.reply({ content: "<a:butterfly:1149702682722967603> We have encountered an error." })
+            return interaction.editReply({ content: "<a:butterfly:1149702682722967603> We have encountered an error." })
         }
     },
 };

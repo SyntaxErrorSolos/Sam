@@ -16,8 +16,8 @@ module.exports = {
      * @param { } client
      */
     async execute(interaction, client) {
+        await interaction.deferReply({ ephemeral: true })
         try {
-            await interaction.deferReply({ ephemeral: true })
             const select = new StringSelectMenuBuilder()
                 .setCustomId('help')
                 .setPlaceholder('No options selected :(')
@@ -44,7 +44,7 @@ module.exports = {
             });
         } catch (err) {
             console.log(err)
-            return interaction.reply({ content: "<a:butterfly:1149702682722967603> We have encountered an error." })
+            return interaction.editReply({ content: "<a:butterfly:1149702682722967603> We have encountered an error." })
         }
 
     },
