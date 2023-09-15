@@ -82,6 +82,14 @@ client.on("guildMemberUpdate", async (member) => {
     }
 })
 
+const guildID = []
+const numberOfMessage = []
+
+
+
+
+
+
 
 //message events
 client.on("messageCreate", async (message) => {
@@ -91,12 +99,13 @@ client.on("messageCreate", async (message) => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
+
+
+
+
     if (command === "approve") {
 
         try {
-
-
-
             if (!message.guild.id === "802200297710944283") return;
             if (message.member.roles.cache.has("802569211816968234") === true) {
                 const m = args[0]
@@ -106,7 +115,7 @@ client.on("messageCreate", async (message) => {
                 else {
                     await guildAccount.create({
                         guildID: m,
-                        Tokens: 100
+                        Tokens: 300
                     })
                     return await message.reply("Guild has been approved.")
                 }

@@ -59,7 +59,7 @@ module.exports = {
       const findGuild = await guildAccount.findOne({ guildID: interaction.guild.id })
       const findUser = await userAccount.findOne({ userID: interaction.user.id })
       if (!findGuild) return;
-      if (!findUser) await userAccount.create({ userID: interaction.user.id, Tokens: 100 })
+      if (!findUser) await userAccount.create({ userID: interaction.user.id, Tokens: 300 })
       
       command.execute(interaction, client);
 

@@ -9,6 +9,6 @@ module.exports =
             Left: Number,
             JoinedWeekly: Number,
             LeftWeekly: Number,
-            PreviousWeek: Number
+            PreviousWeek: Number,
         })
     );
