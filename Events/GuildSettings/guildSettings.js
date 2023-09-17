@@ -6,6 +6,7 @@ module.exports =
         "guildSettings",
         new Schema({
             guildID: String,
-            Description: { type: String, default: "A cool server." }
+            Description: { type: String, default: "A cool server." },
+            TipsChannel: String
         })
     );

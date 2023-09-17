@@ -1,7 +1,8 @@
 const {
     ChatInputCommandInteraction,
     SlashCommandBuilder,
-    PermissionFlagsBits
+    PermissionFlagsBits,
+    ChannelType,
 } = require("discord.js");
 
 const guildSettings = require("../Events/GuildSettings/guildSettings")
@@ -11,7 +12,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("settings")
         .setDescription("Manage your server settings")
-        .setDMPermission(PermissionFlagsBits.ManageGuild)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addSubcommand((subcommand) => {
             return subcommand
                 .setName("description")
@@ -22,6 +23,18 @@ module.exports = {
                         .setDescription("the server description")
                         .setMinLength(10)
                         .setMaxLength(500)
+                        .setRequired(true)
+                })
+        })
+        .addSubcommand((subcommand) => {
+            return subcommand
+                .setName("channel")
+                .setDescription("Change the auto tips channel")
+                .addChannelOption((string) => {
+                    return string
+                        .setName("channel")
+                        .setDescription("channel for auto tips")
+                        .addChannelTypes(ChannelType.GuildText)
                         .setRequired(true)
                 })
         }),
@@ -41,6 +54,18 @@ module.exports = {
                     guildID: interaction.guild.id
                 }, {
                     Description: desc
+                })
+
+                return interaction.editReply("Updated.")
+
+            } else if (interaction.options.getSubcommand() === "channel") {
+                const channelID = interaction.options.getChannel("channel");
+                if (!channelID) return;
+
+                await guildSettings.findOneAndUpdate({
+                    guildID: interaction.guild.id
+                }, {
+                    TipsChannel: channelID.id
                 })
 
                 return interaction.editReply("Updated.")

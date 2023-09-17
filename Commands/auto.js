@@ -75,9 +75,10 @@ module.exports = {
                         })
                         guildSettings.create({
                             guildID: interaction.guild.id,
-                            Description: "A fun server."
+                            Description: "A fun server.",
+                            TipsChannel: interaction.channel.id
                         })
-                        return interaction.editReply({ content: "Enabled. If you wish to see the current settings or configure them, Please run /settings", components: [] })
+                        return interaction.editReply({ content: "Enabled. If you wish to see the current settings or configure them, Please run /settings.\n:warning: Tips channel has been bound to the current channel! Please run /settings channel to change it!", components: [] })
                     }
                 } else if (confirmation.customId === 'disable') {
                     await guildJoinRate.findOneAndDelete({ guildID: interaction.guild.id })
